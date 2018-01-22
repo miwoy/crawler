@@ -39,7 +39,7 @@ class FXH_Coin extends Case {
 	}
 	async criminate(evidence) {
 		// impl
-		request.post("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, evidence);
+		request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol,null, evidence);
 		return evidence;
 	}
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js",
     "test": "echo 'test'"
   },
   "author": "Miwoes",
@@ -14,5 +15,8 @@
     "jsonwebtoken": "^8.1.0",
     "node-uuid": "^1.4.8",
     "superagent": "^3.8.2"
+  },
+  "devDependencies": {
+    "runkoa": "^1.5.9"
   }
 }
