@@ -7,7 +7,7 @@ import { x, util } from "../lib/common";
 
 const fxhentry = "https://www.feixiaohao.com";
 let index = 1;
-let max = 1;
+let max = 18;
 
 let main = async() => {
 	let fxh_coins = new FXH_Coins({
@@ -19,6 +19,7 @@ let main = async() => {
 		}));
 	} while (++index <= max)
 	let reuslt = await fxh_coins.start();
+	console.log("success")
 }
 
 main().catch((err) => console.log(err));

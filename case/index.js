@@ -14,6 +14,7 @@ class Intelligence {
 		this.domain = opts.domain;
 		this.path = opts.path;
 		this.url = opts.url;
+		this.attach = opts.attach;
 	}
 }
 
@@ -36,9 +37,9 @@ class Police {
 				});
 				await util.sleep(this.case.sleepTime || 0);
 				let evidence = await this.case.interrogate(culprit, intell); // 审问
-				debug("interrogate:", evidence);
+				// debug("interrogate:", evidence);
 				let result = await this.case.criminate(evidence, intell); // 审判
-				debug("criminate:", result);
+				// debug("criminate:", result);
 				this.slammer.push(result);
 			} catch (err) {
 				if (!this.case.force) throw err;
@@ -60,7 +61,7 @@ class Case {
 		opts = opts || {};
 		this.name = name || "case";
 		this.domain = opts.domain;
-		this.sleepTime = opts.sleepTime || 1000;
+		this.sleepTime = opts.sleepTime || 10;
 		this.force = opts.force || true;
 		this.intelligences = [];
 		this.police = new Police(this);
@@ -89,7 +90,7 @@ class Case {
 
 	}
 	async onerror(error) {
-
+		console.log("Error", error)
 	}
 	async onend() {
 

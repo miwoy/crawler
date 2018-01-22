@@ -14,7 +14,7 @@ class FXH_Exchange extends Case {
 			logo_url: "http:" + $(".marketinfo .cover img").attr("src"),
 			zh_name: $(".marketinfo .info h1").text(),
 			en_name: intell.path.split("/").pop(),
-			introduce: $(".marketinfo .info .text").text(),
+			desc: $(".marketinfo .info .text").text(),
 			support_type: $(".marketinfo .info .tag a").map((i, el) => $(el).attr("href").slice(-1)).get(),
 			official_website: $("a", $(".marketinfo .info .web span")[0]).attr("href"),
 			country: $("a", $(".marketinfo .info .web span")[1]).text(),
@@ -26,9 +26,17 @@ class FXH_Exchange extends Case {
 
 		return evidence;
 	}
-	async criminate(evidence) {
+	async criminate(evidence, intell) {
 		// impl
-		request.put("http://127.0.0.1:3000/rest/exchange/" + evidence.en_name, null, evidence);
+		let data = {};
+		evidence.attach = {
+			coins: [],
+			// statistic
+			volume_usd_statistic: {}
+		};
+		data.exchange = evidence;
+		data.symbols = intell.attach.symbols || [];
+		request.post("http://127.0.0.1:3000/api/exchange/import", data);
 		return "evidence";
 	}
 
