@@ -35,9 +35,9 @@ class Police {
 					ContentType: "HTML"
 				});
 				await util.sleep(this.case.sleepTime || 0);
-				let evidence = await this.case.interrogate(culprit); // 审问
+				let evidence = await this.case.interrogate(culprit, intell); // 审问
 				debug("interrogate:", evidence);
-				let result = await this.case.criminate(evidence); // 审判
+				let result = await this.case.criminate(evidence, intell); // 审判
 				debug("criminate:", result);
 				this.slammer.push(result);
 			} catch (err) {
@@ -61,7 +61,7 @@ class Case {
 		this.name = name || "case";
 		this.domain = opts.domain;
 		this.sleepTime = opts.sleepTime || 1000;
-		this.force = opts.force || false;
+		this.force = opts.force || true;
 		this.intelligences = [];
 		this.police = new Police(this);
 	}

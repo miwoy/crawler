@@ -2,6 +2,7 @@ import { Intelligence, Case } from "./";
 import cheerio from "cheerio";
 import request from "../lib/request";
 import FXH_Coin_DESC from "./FXH_Coin_DESC";
+import fs from "fs";
 
 class FXH_Coin extends Case {
 	constructor(opts) {
@@ -39,7 +40,7 @@ class FXH_Coin extends Case {
 	}
 	async criminate(evidence) {
 		// impl
-		request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol,null, evidence);
+		request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
 		return evidence;
 	}
 

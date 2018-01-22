@@ -1,4 +1,5 @@
 import { Intelligence, Case } from "./";
+import FXH_Exchange from "./FXH_Exchange";
 import cheerio from "cheerio";
 
 class FXH_Exchanges extends Case {
@@ -8,9 +9,26 @@ class FXH_Exchanges extends Case {
 	}
 	async interrogate(culprit) {
 		// impl
+		let $ = cheerio.load(culprit);
+		let list = $(".plantList li");
+		list = list.map((i,el)=> {
+			return $("a", el).attr("href");
+		}).get();
+		let fxh_exchange  = new FXH_Exchange({
+			domain: this.domain
+		});
+		
+		list.forEach(path=>fxh_exchange.gather(new Intelligence({
+			path: path
+		})));
+
+		let evidence = await fxh_exchange.start();
+
+		return list;
 	}
 	async criminate(evidence) {
 		// impl
+		return	 evidence
 	}
 
 }
