@@ -22,7 +22,8 @@
 *   opts 案件设置
     -   opts.domain 公共domain
     -   opts.sleepTime 对每个情报执行时间间隔，默认0
-    -   opts.force 在发生错误时是否忽略错误强制执行下面情报，默认false
+    -   opts.force 在发生错误时是否忽略错误强制执行下面情报，默认true
+    -   opts.fork 并发数量 默认10
     
 ###### 属性
 
@@ -31,7 +32,8 @@
 *   police 情报执行者
 *   domain 公共domain
 *   sleepTime 对每个情报执行时间间隔，默认
-*   force 在发生错误时是否忽略错误强制执行下面情报，默认fals
+*   force 在发生错误时是否忽略错误强制执行下面情报，默认true
+*   fork 并发数量，默认10
 
 ###### 方法
 

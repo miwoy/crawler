@@ -28,28 +28,34 @@ class Police {
 	}
 	async collar() { // 逮捕
 		let intell;
-		while (this.case.intelligences.length > 0) {
-			intell = this.case.intelligences.shift();
-			debug("collar:", intell.url);
-			try {
-				let culprit = await request.get(intell.url, intell.query, {
-					ContentType: "HTML"
+		let queue = [];
+		let self = this;
+		while (self.case.intelligences.length > 0) {
+			queue.push(self.case.intelligences.shift());
+			if (queue.length >= self.case.fork) {
+				await x.each(queue, async(intell) => {
+					try {
+						debug("collar:", intell.url);
+						let culprit = await request.get(intell.url, intell.query, {
+							ContentType: "HTML"
+						});
+						let evidence = await self.case.interrogate(culprit, intell); // 审问
+						// debug("interrogate:", evidence);
+						let result = await self.case.criminate(evidence, intell); // 审判
+						// debug("criminate:", result);
+						self.slammer.push(result);
+					} catch (err) {
+						if (!self.case.force) throw err;
+						self.case.onerror && self.case.onerror(err);
+					}
 				});
-				await util.sleep(this.case.sleepTime || 0);
-				let evidence = await this.case.interrogate(culprit, intell); // 审问
-				// debug("interrogate:", evidence);
-				let result = await this.case.criminate(evidence, intell); // 审判
-				// debug("criminate:", result);
-				this.slammer.push(result);
-			} catch (err) {
-				if (!this.case.force) throw err;
-				this.case.onerror && this.case.onerror(err);
+				queue = [];
+				await util.sleep(self.case.sleepTime || 0);
 			}
-
 		}
 
-		this.onend && this.onend();
-		return this.slammer;
+		self.onend && self.onend();
+		return self.slammer;
 	}
 }
 
@@ -61,13 +67,14 @@ class Case {
 		opts = opts || {};
 		this.name = name || "case";
 		this.domain = opts.domain;
-		this.sleepTime = opts.sleepTime || 10;
+		this.sleepTime = opts.sleepTime || 1000;
+		this.fork = opts.fork || 10;
 		this.force = opts.force || true;
 		this.intelligences = [];
 		this.police = new Police(this);
 	}
 	gather(intelligence) {
-		if (!(intelligence instanceof Intelligence)) throw new TypeError("intelligence: "+ JSON.stringify(intelligence));
+		if (!(intelligence instanceof Intelligence)) throw new TypeError("intelligence: " + JSON.stringify(intelligence));
 
 		intelligence.domain = intelligence.domain || this.domain;
 		intelligence.url = intelligence.url || url.resolve(intelligence.domain, intelligence.path);

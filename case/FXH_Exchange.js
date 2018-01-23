@@ -12,6 +12,7 @@ class FXH_Exchange extends Case {
 		let $ = cheerio.load(culprit);
 		let evidence = {
 			logo_url: "http:" + $(".marketinfo .cover img").attr("src"),
+			icon_url: "https:" + $("head > link").filter((i,el)=>$(el).attr("rel")==="icon").attr("href"),
 			zh_name: $(".marketinfo .info h1").text(),
 			en_name: intell.path.split("/").pop(),
 			desc: $(".marketinfo .info .text").text(),
