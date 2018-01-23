@@ -78,13 +78,12 @@ class FXH_Coin extends Case {
 			}
 		})
 
-		await request.post("http://127.0.0.1:3000/rest/coin", evidence);
-		return evidence;
-
 		// update
 
-		// await request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
-		// return evidence;
+		await request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
+		return evidence;
+
+		
 	}
 
 }
