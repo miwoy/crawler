@@ -46,45 +46,45 @@ class FXH_Coin extends Case {
 	async criminate(evidence, intell) {
 		// impl
 		// create
-		// let dataurl = "https://api.coinmarketcap.com/v1/ticker";
-		// let url = dataurl + intell.path.split("/currencies").pop();
-		// debug("request: "+url)
-		// let data = await request.get(url);
-		// if (!data[0]) return;
-		// data = data[0];
-		// evidence = _.assign(evidence, {
-		// 	cmc_id: data.id,
-		// 	en_name: data.name,
-		// 	symbol: data.symbol,
-		// 	total_amount: data.max_supply,
-		// 	attach: {
-		// 		total_market_cap_usd: data.market_cap_usd,
-		// 		amount: data.total_supply,
-		// 		price: data.price_usd,
-		// 		min_price: 0,
-		// 		max_price: data.price_usd,
+		let dataurl = "https://api.coinmarketcap.com/v1/ticker";
+		let url = dataurl + intell.path.split("/currencies").pop();
+		debug("request: "+url)
+		let data = await request.get(url);
+		if (!data[0]) return;
+		data = data[0];
+		evidence = _.assign(evidence, {
+			cmc_id: data.id,
+			en_name: data.name,
+			symbol: data.symbol,
+			total_amount: data.max_supply,
+			attach: {
+				total_market_cap_usd: data.market_cap_usd,
+				amount: data.total_supply,
+				price: data.price_usd,
+				min_price: 0,
+				max_price: data.price_usd,
 
-		// 		// statistic
-		// 		min_price_statistic: {},
-		// 		max_price_statistic: {},
-		// 		max_price_statistic: {},
-		// 		max_price_statistic: {},
-		// 		volume_statistic: {
-		// 			of24h: data["24h_volume_usd"]/data.price_usd
-		// 		},
-		// 		percent_change_statistic: {
-		// 			of24h: data["percent_change_24h"]
-		// 		}
-		// 	}
-		// })
+				// statistic
+				min_price_statistic: {},
+				max_price_statistic: {},
+				max_price_statistic: {},
+				max_price_statistic: {},
+				volume_statistic: {
+					of24h: data["24h_volume_usd"]/data.price_usd
+				},
+				percent_change_statistic: {
+					of24h: data["percent_change_24h"]
+				}
+			}
+		})
 
-		// await request.post("http://127.0.0.1:3000/rest/coin", evidence);
-		// return evidence;
+		await request.post("http://127.0.0.1:3000/rest/coin", evidence);
+		return evidence;
 
 		// update
 
-		await request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
-		return evidence;
+		// await request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
+		// return evidence;
 	}
 
 }

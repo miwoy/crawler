@@ -67,8 +67,8 @@ class Case {
 		opts = opts || {};
 		this.name = name || "case";
 		this.domain = opts.domain;
-		this.sleepTime = opts.sleepTime || 1000;
-		this.fork = opts.fork || 10;
+		this.sleepTime = opts.sleepTime || 0;
+		this.fork = opts.fork || 1;
 		this.force = opts.force || true;
 		this.intelligences = [];
 		this.police = new Police(this);
