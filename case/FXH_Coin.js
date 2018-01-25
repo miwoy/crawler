@@ -61,7 +61,7 @@ class FXH_Coin extends Case {
 				total_market_cap_usd: data.market_cap_usd,
 				amount: data.total_supply,
 				price_usd: data.price_usd,
-				min_price_usd: 0,
+				min_price_usd: data.price_usd,
 				max_price_usd: data.price_usd,
 
 				// statistic
