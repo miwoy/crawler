@@ -40,6 +40,10 @@ let main = async() => {
 	let kraken = await request.get("https://api.kraken.com/0/public/AssetPairs");
 	kraken = _.values(kraken.result).map(s=>[s["base"], s["quote"].slice(1)]);
 
+	let hitbtc = await request.get("https://api.hitbtc.com/api/2/public/symbol");
+	hitbtc = hitbtc.map(s=>[s.baseCurrency, s.quoteCurrency]);
+
+
 	let srcs = [{
 		"path": "/exchange/okex",
 		symbols: okex
@@ -55,6 +59,9 @@ let main = async() => {
 	}, {
 		"path": "/exchange/kraken",
 		symbols: kraken
+	}, {
+		"path": "/exchange/hitbtc",
+		symbols: hitbtc
 	}];
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
