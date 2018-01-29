@@ -21,7 +21,7 @@ let main = async() => {
 	// } while (++index <= max)
 	// let reuslt = await fxh_exchanges.start();
 
-	// 格式化symbols
+	// 格式化symbolss
 	let bitfinex = await request.get("https://api.bitfinex.com/v1/symbols");
 	bitfinex = bitfinex.map(b => [b.slice(0, 3).toUpperCase(), b.slice(3).toUpperCase()]);
 	let binance = await request.get("https://api.binance.com/api/v1/exchangeInfo");
@@ -43,7 +43,8 @@ let main = async() => {
 	let hitbtc = await request.get("https://api.hitbtc.com/api/2/public/symbol");
 	hitbtc = hitbtc.map(s=>[s.baseCurrency, s.quoteCurrency]);
 
-
+	let zb = await request.get("http://api.zb.com/data/v1/markets");
+	zb = _.keys(zb).map(s=>[s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
 	let srcs = [{
 		"path": "/exchange/okex",
 		symbols: okex
@@ -62,6 +63,9 @@ let main = async() => {
 	}, {
 		"path": "/exchange/hitbtc",
 		symbols: hitbtc
+	}, {
+		"path": "/exchange/zb",
+		symbols: zb
 	}];
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
