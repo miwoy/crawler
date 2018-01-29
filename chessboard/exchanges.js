@@ -45,6 +45,13 @@ let main = async() => {
 
 	let zb = await request.get("http://api.zb.com/data/v1/markets");
 	zb = _.keys(zb).map(s=>[s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
+
+    let huobipro = await request.get("https://api.huobi.pro/v1/common/symbols");
+    huobipro = huobipro.data.map(s=>[s["base-currency"].toUpperCase(),s["quote-currency"].toUpperCase()]);
+
+    let bittrex = await request.get("https://bittrex.com/api/v1.1/public/getmarkets");
+    bittrex = bittrex.result.map((item)=>item.MarketName.split('-'));
+
 	let srcs = [{
 		"path": "/exchange/okex",
 		symbols: okex
@@ -66,7 +73,14 @@ let main = async() => {
 	}, {
 		"path": "/exchange/zb",
 		symbols: zb
-	}];
+	}, {
+        "path": "/exchange/huobipro",
+        symbols: huobipro
+    }, {
+        "path": "/exchange/bittrex",
+        symbols: bittrex
+    }];
+
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
 		domain: fxhentry
