@@ -3,6 +3,7 @@ import FXH_Exchanges from "../case/FXH_Exchanges";
 import FXH_Exchange from "../case/FXH_Exchange";
 import { x, util } from "../lib/common";
 import request from "../lib/request";
+import _ from "lodash";
 
 const fxhentry = "https://www.feixiaohao.com/";
 let index = 1;
@@ -36,6 +37,9 @@ let main = async() => {
 	let gdax = await request.get("https://api.gdax.com/products");
 	gdax = gdax.map(s=>[s["base_currency"], s["quote_currency"]]);
 
+	let kraken = await request.get("https://api.kraken.com/0/public/AssetPairs");
+	kraken = _.values(kraken.result).map(s=>[s["base"], s["quote"].slice(1)]);
+
 	let srcs = [{
 		"path": "/exchange/okex",
 		symbols: okex
@@ -48,6 +52,9 @@ let main = async() => {
 	}, {
 		"path": "/exchange/gdax",
 		symbols: gdax
+	}, {
+		"path": "/exchange/kraken",
+		symbols: kraken
 	}];
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
