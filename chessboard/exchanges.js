@@ -19,11 +19,21 @@ let main = async() => {
 	// 	}));
 	// } while (++index <= max)
 	// let reuslt = await fxh_exchanges.start();
+
+	// 格式化symbols
 	let bitfinex = await request.get("https://api.bitfinex.com/v1/symbols");
-	bitfinex = bitfinex.map(b=>[b.slice(0,3).toUpperCase(), b.slice(3).toUpperCase()]);
+	bitfinex = bitfinex.map(b => [b.slice(0, 3).toUpperCase(), b.slice(3).toUpperCase()]);
 	let binance = await request.get("https://api.binance.com/api/v1/exchangeInfo");
-	binance = binance.symbols.map(s=>[s.baseAsset, s.quoteAsset])
-	let okex = ["ltc_btc", "eth_btc", "etc_btc", "bch_btc", "btc_usdt", "eth_usdt", "ltc_usdt", "etc_usdt", "bch_usdt", "etc_eth", "bt1_btc", "bt2_btc", "btg_btc", "qtum_btc", "hsr_btc", "neo_btc", "gas_btc", "qtum_usdt", "hsr_usdt", "neo_usdt", "gas_usdt"].map(s=>[s.split("_")[0].toUpperCase(),s.split("_")[1].toUpperCase()]);
+	binance = binance.symbols.map(s => [s.baseAsset, s.quoteAsset])
+	let okex = [
+		"ltc_btc", "eth_btc", "etc_btc", "bch_btc",
+		"btc_usdt", "eth_usdt", "ltc_usdt", "etc_usdt",
+		"bch_usdt", "etc_eth", "bt1_btc", "bt2_btc",
+		"btg_btc", "qtum_btc", "hsr_btc", "neo_btc",
+		"gas_btc", "qtum_usdt", "hsr_usdt", "neo_usdt", "gas_usdt"
+	].map(s => [s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
+
+
 	let srcs = [{
 		"path": "/exchange/okex",
 		symbols: okex
