@@ -33,6 +33,8 @@ let main = async() => {
 		"gas_btc", "qtum_usdt", "hsr_usdt", "neo_usdt", "gas_usdt"
 	].map(s => [s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
 
+	let gdax = await request.get("https://api.gdax.com/products");
+	gdax = gdax.map(s=>[s["base_currency"], s["quote_currency"]]);
 
 	let srcs = [{
 		"path": "/exchange/okex",
@@ -43,6 +45,9 @@ let main = async() => {
 	}, {
 		"path": "/exchange/bitfinex",
 		symbols: bitfinex
+	}, {
+		"path": "/exchange/gdax",
+		symbols: gdax
 	}];
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
