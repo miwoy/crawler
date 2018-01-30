@@ -50,7 +50,9 @@ let main = async() => {
     huobipro = huobipro.data.map(s=>[s["base-currency"].toUpperCase(),s["quote-currency"].toUpperCase()]);
 
     let bittrex = await request.get("https://bittrex.com/api/v1.1/public/getmarkets");
-    bittrex = bittrex.result.map((item)=>item.MarketName.split('-'));
+    bittrex = bittrex.result.map((item)=>item.MarketName.split('-').reverse());
+
+    let bithumb = [["BTC","KRW"], ["ETH","KRW"], ["DASH","KRW"], ["LTC","KRW"], ["ETC","KRW"], ["XRP","KRW"], ["BCH","KRW"], ["XMR","KRW"], ["ZEC","KRW"], ["QTUM","KRW"], ["BTG","KRW"], ["EOS","KRW"]]
 
 	let srcs = [{
 		"path": "/exchange/okex",
@@ -79,6 +81,9 @@ let main = async() => {
     }, {
         "path": "/exchange/bittrex",
         symbols: bittrex
+    }, {
+    	"path": "/exchange/bithumb",
+    	symbols: bithumb
     }];
 
 	// console.log(srcs);
