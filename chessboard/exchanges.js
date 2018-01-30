@@ -35,26 +35,46 @@ let main = async() => {
 	].map(s => [s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
 
 	let gdax = await request.get("https://api.gdax.com/products");
-	gdax = gdax.map(s=>[s["base_currency"], s["quote_currency"]]);
+	gdax = gdax.map(s => [s["base_currency"], s["quote_currency"]]);
 
 	let kraken = await request.get("https://api.kraken.com/0/public/AssetPairs");
-	kraken = _.values(kraken.result).map(s=>[s["base"], s["quote"].slice(1)]);
+	kraken = _.values(kraken.result).map(s => [s["base"], s["quote"].slice(1)]);
 
 	let hitbtc = await request.get("https://api.hitbtc.com/api/2/public/symbol");
-	hitbtc = hitbtc.map(s=>[s.baseCurrency, s.quoteCurrency]);
+	hitbtc = hitbtc.map(s => [s.baseCurrency, s.quoteCurrency]);
 
 	let zb = await request.get("http://api.zb.com/data/v1/markets");
-	zb = _.keys(zb).map(s=>[s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
+	zb = _.keys(zb).map(s => [s.split("_")[0].toUpperCase(), s.split("_")[1].toUpperCase()]);
 
-    let huobipro = await request.get("https://api.huobi.pro/v1/common/symbols");
-    huobipro = huobipro.data.map(s=>[s["base-currency"].toUpperCase(),s["quote-currency"].toUpperCase()]);
+	let huobipro = await request.get("https://api.huobi.pro/v1/common/symbols");
+	huobipro = huobipro.data.map(s => [s["base-currency"].toUpperCase(), s["quote-currency"].toUpperCase()]);
 
-    let bittrex = await request.get("https://bittrex.com/api/v1.1/public/getmarkets");
-    bittrex = bittrex.result.map((item)=>item.MarketName.split('-').reverse());
+	let bittrex = await request.get("https://bittrex.com/api/v1.1/public/getmarkets");
+	bittrex = bittrex.result.map((item) => item.MarketName.split('-').reverse());
 
-    let bithumb = [["BTC","KRW"], ["ETH","KRW"], ["DASH","KRW"], ["LTC","KRW"], ["ETC","KRW"], ["XRP","KRW"], ["BCH","KRW"], ["XMR","KRW"], ["ZEC","KRW"], ["QTUM","KRW"], ["BTG","KRW"], ["EOS","KRW"]]
+	let bithumb = [
+		["BTC", "KRW"],
+		["ETH", "KRW"],
+		["DASH", "KRW"],
+		["LTC", "KRW"],
+		["ETC", "KRW"],
+		["XRP", "KRW"],
+		["BCH", "KRW"],
+		["XMR", "KRW"],
+		["ZEC", "KRW"],
+		["QTUM", "KRW"],
+		["BTG", "KRW"],
+		["EOS", "KRW"]
+	];
+
+	let poloniex = await request.get("https://poloniex.com/public?command=returnTicker");
+
+	poloniex = _.keys(poloniex).map(s=>[s.split("_")[1], s.split("_")[0]]);
 
 	let srcs = [{
+		"path": "/exchange/poloniex",
+		symbols: poloniex
+	}, {
 		"path": "/exchange/okex",
 		symbols: okex
 	}, {
@@ -76,15 +96,15 @@ let main = async() => {
 		"path": "/exchange/zb",
 		symbols: zb
 	}, {
-        "path": "/exchange/huobipro",
-        symbols: huobipro
-    }, {
-        "path": "/exchange/bittrex",
-        symbols: bittrex
-    }, {
-    	"path": "/exchange/bithumb",
-    	symbols: bithumb
-    }];
+		"path": "/exchange/huobipro",
+		symbols: huobipro
+	}, {
+		"path": "/exchange/bittrex",
+		symbols: bittrex
+	}, {
+		"path": "/exchange/bithumb",
+		symbols: bithumb
+	}];
 
 	// console.log(srcs);
 	let fxh_exchange = new FXH_Exchange({
