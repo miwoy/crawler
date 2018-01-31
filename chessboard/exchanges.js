@@ -4,11 +4,55 @@ import FXH_Exchange from "../case/FXH_Exchange";
 import { x, util } from "../lib/common";
 import request from "../lib/request";
 import _ from "lodash";
+import ccxt from "ccxt";
 
 const fxhentry = "https://www.feixiaohao.com/";
 let index = 1;
 // let max = 15;
 let max = 1;
+
+let newm = async() => {
+
+	let exchanges = ccxt.exchanges;
+	let srcs = [];
+	await x.each(exchanges, async(e) => {
+		try {
+			let exchange = new ccxt[e]();
+			await exchange.loadMarkets();
+			let _s = [];
+			exchange.symbols.forEach(s => {
+				if (s.indexOf("/") >= 0) {
+					_s.push([s.split("/")[0], s.split("/")[1]]);
+				}
+			});
+
+			srcs.push({
+				path: "/exchange/" + e,
+				symbols: _s
+			});
+		} catch (e) {
+			// console.log(e);
+		}
+
+	});
+
+	// return console.log(srcs)
+
+	let fxh_exchange = new FXH_Exchange({
+		domain: fxhentry
+	});
+	srcs.forEach(s => fxh_exchange.gather(new Intelligence({
+		path: s.path,
+		attach: {
+			symbolsApi: s.symbolsApi,
+			symbols: s.symbols
+		}
+	})));
+
+	await fxh_exchange.start();
+}
+
+newm().catch((err) => console.log(err));
 
 let main = async() => {
 	// let fxh_exchanges = new FXH_Exchanges({
@@ -69,7 +113,7 @@ let main = async() => {
 
 	let poloniex = await request.get("https://poloniex.com/public?command=returnTicker");
 
-	poloniex = _.keys(poloniex).map(s=>[s.split("_")[1], s.split("_")[0]]);
+	poloniex = _.keys(poloniex).map(s => [s.split("_")[1], s.split("_")[0]]);
 
 	let srcs = [{
 		"path": "/exchange/poloniex",
@@ -121,4 +165,4 @@ let main = async() => {
 	await fxh_exchange.start();
 }
 
-main().catch((err) => console.log(err));
+// main().catch((err) => console.log(err));
