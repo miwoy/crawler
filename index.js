@@ -6,5 +6,7 @@ if (arg === "coin") {
 	require("./chessboard/exchanges");
 } else if (arg === "chinaz") {
 	require("./chessboard/chinaz");
+} else {
+	require("./chessboard/"+arg);
 }
 

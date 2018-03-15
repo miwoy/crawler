@@ -8,7 +8,8 @@
     "test": "echo 'test'",
     "coin": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js coin",
     "exchange": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js exchange",
-    "chinaz": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js chinaz"
+    "chinaz": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js chinaz",
+    "binance": "DEBUG=crawler:* node ./node_modules/runkoa/bin/runkoa.js index.js binance"
   },
   "author": "Miwoes",
   "license": "ISC",

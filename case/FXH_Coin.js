@@ -120,7 +120,7 @@ class FXH_Coin extends Case {
 		// ["中文名", "英文名", "代码", "logo", "官网", "发布时间", "类型", "总数量", "已发行数量", "当前价格", "发行价"]
 		if (new Date(evidence.publish_time).getTime() >= 1514764800000) {
 			try {
-				let binance = new Binance({ domain: "https://info.binance.com/cn/F" });
+				let binance = new Binance({ domain: "https://info.binance.com/cn/currencies/" });
 				binance.gather(new Intelligence({
 					path: evidence.en_name.split(" ")[0]
 				}));

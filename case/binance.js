@@ -6,13 +6,13 @@ class Binance extends Case {
 		super("binance", opts);
 	}
 
-	async interrogate(culprit) {
+	async interrogate(culprit, intell) {
 
 		// impl
 		let evidence = "";
 		let $ = cheerio.load(culprit);
 		evidence = $("body > div:nth-child(2) > div:nth-child(3) > div > div.row.content-top > div.col-xs-7 > div > div:nth-child(4) > div > strong:nth-child(3) > font").text();
-		console.log(evidence)
+		console.log(evidence, intell)
 		return evidence;
 	}
 	async criminate(evidence) {
