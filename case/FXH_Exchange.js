@@ -19,7 +19,7 @@ class FXH_Exchange extends Case {
 			support_type: $(".marketinfo .info .tag a").map((i, el) => $(el).attr("href").slice(-1)).get(),
 			official_website: $("a", $(".marketinfo .info .web span")[0]).attr("href"),
 			country: $("a", $(".marketinfo .info .web span")[1]).text(),
-			cost_desc: $("body > div.w1200 > div > div.box.box845 > div.boxContain > div:nth-child(3) > section > p:nth-child(2)").html(),
+			cost_desc: $("body > div.w1200 > div > div.box.box845 > div.boxContain > div:nth-child(3) > section > p:nth-child(2)").text(),
 			twitter: $(".twitter", $(".marketinfo .info .web span")[2]).attr("href"),
 			facebook: $(".facebook", $(".marketinfo .info .web span")[2]).attr("href"),
 			weibo: $(".blog", $(".marketinfo .info .web span")[2]).attr("href")
