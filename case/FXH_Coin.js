@@ -74,18 +74,7 @@ class FXH_Coin extends Case {
 		} catch (e) {
 			evidence.desc = ""
 		}
-		try {
-			let binance = new Binance({ domain: "https://info.binance.com/cn/currencies"});
-			binance.gather(new Intelligence({
-				path: evidence.en_name.split(" ")[0]
-			}));
 
-			evidence.issue_price_usd = await binance.start();
-		} catch (e) {
-			console.log(e)
-			evidence.issue_price_usd = 0;
-		}
-		console.log("debug")
 
 		return evidence;
 
@@ -128,18 +117,29 @@ class FXH_Coin extends Case {
 		// })
 
 		// update
-		// ["中文名", "英文名", "代码", "logo", "官网", "发布时间", "类型", "总数量", "已发行数量", "当前价格"]
-		if (new Date(evidence.publish_time).getTime()>=1514764800000) {
-			console.log(evidence);
-			fs.appendFileSync('coins.csv', 
-				[
-				evidence.zh_name.trim(),evidence.en_name.trim(),
-				evidence.symbol,evidence.logo_url,evidence.website,
-				 evidence.publish_time,evidence.type, 
-				 evidence.total_amount, evidence.attach.amount, 
-				 evidence.attach.price_usd].join(",")+"\n");
+		// ["中文名", "英文名", "代码", "logo", "官网", "发布时间", "类型", "总数量", "已发行数量", "当前价格", "发行价"]
+		if (new Date(evidence.publish_time).getTime() >= 1514764800000) {
+			try {
+				let binance = new Binance({ domain: "https://info.binance.com/cn/F" });
+				binance.gather(new Intelligence({
+					path: evidence.en_name.split(" ")[0]
+				}));
+
+				evidence.issue_price_usd = await binance.start();
+			} catch (e) {
+				console.log(e)
+				evidence.issue_price_usd = 0;
+			}
+			fs.appendFileSync('coins.csv', [
+				evidence.zh_name.trim(), evidence.en_name.trim(),
+				evidence.symbol, evidence.logo_url, evidence.website,
+				evidence.publish_time, evidence.type,
+				evidence.total_amount, evidence.attach.amount,
+				evidence.attach.price_usd,
+				evidence.issue_price_usd
+			].join(",") + "\n");
 		}
-		
+
 		// await request.put("http://127.0.0.1:3000/rest/coin/" + evidence.symbol, null, evidence);
 		return evidence;
 
