@@ -36,7 +36,7 @@ class Police {
 			if (queue.length >= self.case.fork) {
 				await x.each(queue, async(intell) => {
 					debug("collar:", intell.url);
-					const browser = await puppeteer.launch();
+					const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
 					try {
 
 						// let culprit = await request.get(intell.url, intell.query, {
