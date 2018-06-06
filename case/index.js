@@ -2,6 +2,7 @@ import request from "../lib/request";
 import url from "url";
 import { util, x } from "../lib/common";
 import Debug from "debug";
+import puppeteer from "puppeteer";
 
 const debug = Debug("crawler:case");
 
@@ -34,17 +35,28 @@ class Police {
 			queue.push(self.case.intelligences.shift());
 			if (queue.length >= self.case.fork) {
 				await x.each(queue, async(intell) => {
+					debug("collar:", intell.url);
+					const browser = await puppeteer.launch();
 					try {
-						debug("collar:", intell.url);
-						let culprit = await request.get(intell.url, intell.query, {
-							ContentType: "HTML"
+
+						// let culprit = await request.get(intell.url, intell.query, {
+						// 	ContentType: "HTML"
+						// });
+
+
+						const page = await browser.newPage();
+						await page.goto(intell.url);
+						let culprit = await page.evaluate(() => {
+							return document.documentElement.outerHTML;
 						});
+						await browser.close();
 						let evidence = await self.case.interrogate(culprit, intell); // 审问
 						// debug("interrogate:", evidence);
 						let result = await self.case.criminate(evidence, intell); // 审判
 						// debug("criminate:", result);
 						self.slammer.push(result);
 					} catch (err) {
+						browser.close();
 						if (!self.case.force) throw err;
 						self.case.onerror && self.case.onerror(err);
 					}
