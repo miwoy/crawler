@@ -35,9 +35,11 @@ let newm = async() => {
 		}
 
 	});
-
+	
 	// return console.log(srcs)
-
+	var filer = ["/exchange/hitbtc", "/exchange/cryptopia", "/exchange/yobit", "/exchange/tidex"]
+	srcs = srcs.filter(o=>filer.indexOf(o.path)>=0);
+	console.log("debug", srcs)
 	let fxh_exchange = new FXH_Exchange({
 		domain: fxhentry
 	});
@@ -48,7 +50,7 @@ let newm = async() => {
 			symbols: s.symbols
 		}
 	})));
-
+	console.log(fxh_exchange.intelligences.length)
 	await fxh_exchange.start();
 }
 

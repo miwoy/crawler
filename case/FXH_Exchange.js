@@ -33,11 +33,11 @@ class FXH_Exchange extends Case {
 		evidence.attach = {
 			coins: [],
 			// statistic
-			volume_usd_statistic: {}
+			volume_usd_24h: 0
 		};
 		data.exchange = evidence;
 		data.symbols = intell.attach.symbols || [];
-		request.post("http://127.0.0.1:3000/api/exchange/import", data);
+		request.post("https://www.feixiaohao.tech/api/exchange/import", data);
 		return "evidence";
 	}
 

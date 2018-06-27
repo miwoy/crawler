@@ -31,6 +31,7 @@ class FXH_Coin extends Case {
 			book_url: $($(".value a", secondPark[4])).attr("href"),
 			type: $(".value", $(secondPark[7])).text().replace("\n", "").trim() === "是" ? 2 : 1,
 			total_amount: parseFloat($("#baseInfo > div.firstPart > div:nth-child(3) > div:nth-child(4)").text().replace(/,/g, "")),
+			mining_type: intell.attach.mining_type,
 			attach: {
 				total_market_cap_usd: parseFloat(($("#baseInfo > div.firstPart > div:nth-child(2) > div:nth-child(3)").text().split("$")[1] || "").replace(/,/g, "")),
 				amount: parseFloat($("#baseInfo > div.firstPart > div:nth-child(3) > div:nth-child(2)").text().replace(/,/g, "")),

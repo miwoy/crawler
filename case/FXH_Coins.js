@@ -13,10 +13,29 @@ class FXH_Coins extends Case {
 		let evidence = [];
 		let fxh_coin = new FXH_Coin({ domain: this.domain });
 		for (let i = 0; i < table.length; i++) {
-			let path = $("a", table[i].children[3]).attr("href");
+			let path = $("a", table[i].children[1]).attr("href");
+			let mining_type = 0;
+			mining_type = ($(table[i].children[4]).html()).split(";")[1];
+			switch(mining_type) {
+				case "*":
+					mining_type = 2;
+					break;
+				case "**":
+					mining_type = 3;
+					break;
+				case '<i class="ifo"><div></div></i>':
+					mining_type = 4;
+					break
+				default:
+					mining_type = 1;
+					break
+			}
 
 			fxh_coin.gather(new Intelligence({
-				path: path
+				path: path,
+				attach: {
+					mining_type: mining_type
+				}
 			}));
 			evidence.push(path);
 		}
