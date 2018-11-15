@@ -1,22 +1,35 @@
 import { Intelligence, Case } from "./";
-import FXH_Coin from "./FXH_Coin";
-import cheerio from "cheerio";
+import FXHCoin from "./FXHCoin";
+import * as cheerio from "cheerio";
+import * as Debug from "debug";
+import request from "axios";
 
-class FXH_Coins extends Case {
+const debug = Debug("crawler:case:FXHCoins");
+
+class FXHCoins extends Case {
 	constructor(opts) {
 		super("fxh_coins", opts);
 	}
-	async interrogate(culprit) {
+	async interrogate(culprit: string, intell: Intelligence) {
 		// impl
 		let $ = cheerio.load(culprit);
 		let table = $("#table tbody tr");
-		let evidence = [];
-		let fxh_coin = new FXH_Coin({ domain: this.domain });
+		let evidence: any[]  = [];
+		let fxh_coin = new FXHCoin({ 
+			domain: this.domain, 
+			headless: true,
+			force: true,
+			slave: 4,
+			targetDomain: this.targetDomain
+		});
 		for (let i = 0; i < table.length; i++) {
 			let path = $("a", table[i].children[1]).attr("href");
+			let symbol = $("a", table[i].children[1]).text().split("-")[0] || "";
+			let exists = await request.get(this.targetDomain + "/rest/coin/" + symbol.trim());
+			if (exists.data.data) continue;
 			let mining_type = 0;
-			mining_type = ($(table[i].children[4]).html()).split(";")[1];
-			switch(mining_type) {
+			let mining_type_str = ($(table[i].children[4]).html()).split(";")[1];
+			switch(mining_type_str) {
 				case "*":
 					mining_type = 2;
 					break;
@@ -37,6 +50,7 @@ class FXH_Coins extends Case {
 					mining_type: mining_type
 				}
 			}));
+
 			evidence.push(path);
 		}
 
@@ -49,7 +63,6 @@ class FXH_Coins extends Case {
 		// impl
 		return evidence;
 	}
-
 }
 
-export default FXH_Coins
+export default FXHCoins

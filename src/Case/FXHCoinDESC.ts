@@ -1,7 +1,11 @@
 import { Intelligence, Case } from "./";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
+import * as Debug from "debug";
 
-class FXH_Coin_Detail extends Case {
+const debug = Debug("crawler:case:FXHCoinDESC");
+
+
+class FXHCoinDetail extends Case {
 	constructor(opts) {
 		super("fxh_coinn_desc", opts);
 	}
@@ -9,17 +13,16 @@ class FXH_Coin_Detail extends Case {
 	async interrogate(culprit) {
 
 		// impl
-		let evidence = "";
+		let evidence: string = "";
 		let $ = cheerio.load(culprit);
 		evidence = $(".artBox").text();
 		return evidence;
 	}
-	async criminate(evidence) {
-
+	async criminate(evidence: string) {
 		// impl
 		return evidence;
 	}
 
 }
 
-export default FXH_Coin_Detail;
+export default FXHCoinDetail;
