@@ -11,7 +11,7 @@ var entry = "https://baidu.com"
 export let task:Task = async() => {
 	let icodata: ICOData = new ICOData({
 		domain: entry,
-		targetDomain: "https://www.feixiaohao.tech"
+		reportUrl: "https://www.feixiaohao.tech"
 	});
 
 	let intell: Intelligence = new Intelligence({

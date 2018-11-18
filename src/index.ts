@@ -13,8 +13,7 @@ args.forEach(async arg=> {
 	if (fs.existsSync(taskPath)) {
 		// let task:{task: Task} = require(taskPath);
 		let task = await import(taskPath);
-		console.log(task, taskPath)
-		task.task().then(d=>console.log(`Task ${arg} success.`))//.catch(err=> console.log(`Task ${arg} error:`, err));
+		task.task().then(d=>console.log(`Task ${arg} success.`)).catch(err=> console.error(`Task ${arg} error:`, err));
 	} else {
 		console.error(`file ${arg} not found`);
 	}
