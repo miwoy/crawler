@@ -90,6 +90,19 @@ class Police {
 								const page = await browser.newPage();
 								page.setDefaultNavigationTimeout(this.case.timeout)
 								await page.goto(intell.url);
+								await page.waitFor(3000)
+
+								let scrollEnable = true;
+								let scrollStep = 500; //每次滚动的步长
+								while (scrollEnable) {
+									scrollEnable = await page.evaluate((scrollStep) => {
+										let scrollTop = document.scrollingElement.scrollTop;
+										document.scrollingElement.scrollTop = scrollTop + scrollStep;
+										return document.body.clientHeight > scrollTop + 1080 ? true : false
+									}, scrollStep);
+									await util.sleep(100);
+								}
+
 								culprit = await page.evaluate(() => {
 									return document.documentElement.outerHTML;
 								});
