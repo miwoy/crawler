@@ -30,12 +30,13 @@ export let task:Task = async() => {
 		2.传入情报器
 		3.开始爬取
 	*/
-	let mediumUrls = socials.map(s=>s.medium);
-	mediumUrls.forEach(murl=> {
+	// let mediumUrls = socials.map(s=>s.medium);
+	socials.forEach(social=> {
 		let intell: Intelligence = new Intelligence({
-			url: murl + "/latest?format=json",
+			url: social.medium + "/latest?format=json",
 			attach: {
-				url: murl
+				url: social.medium,
+				social_id: social.id
 			}
 		})
 
