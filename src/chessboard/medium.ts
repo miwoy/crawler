@@ -22,7 +22,7 @@ export let task:Task = async() => {
 		reportUrl: "http://127.0.0.1:8000/api/medium",
 		sleepTime: 3000,
 		force: true,
-		slave: 2
+		slave: 1
 	});
 
 	/*

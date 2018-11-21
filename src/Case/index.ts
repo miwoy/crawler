@@ -118,6 +118,7 @@ class Police {
 								headers: this.case.headers,
 								timeout: this.case.timeout // 可配置
 							});
+							culprit = culprit.data;
 						}
 
 						let evidence = await this.case.interrogate(culprit, intell); // 审问
