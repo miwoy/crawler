@@ -74,7 +74,7 @@ class Police {
 		let queue: any[] = []; // 并且爬取队列
 		while (this.case.intelligences.length > 0) {
 			queue.push(this.case.intelligences.shift());
-			if (queue.length >= this.case.slave) { 
+			if (queue.length >= this.case.slave || this.case.intelligences.length === 0) { 
 				await x.each(queue, async(intell) => {
 					/**
 					 * TODO: Miwoes
