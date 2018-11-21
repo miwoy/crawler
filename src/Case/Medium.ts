@@ -37,7 +37,6 @@ class Medium extends Case {
 
 		// impl
 		// let $ = cheerio.load(culprit); // 使用cheerio处理html
-		
 		if (culprit) {
 			try {
 				culprit = JSON.parse(culprit.split('</x>')[1]);
@@ -51,7 +50,7 @@ class Medium extends Case {
 		let evidences: Evidence[] = [];
 
 		if (culprit.success) {
-			evidences = culprit.payload.posts.map(p=>{
+			evidences = Object.values(culprit.payload.references.Post).map(p=>{
 				let user = culprit.payload.references.User[p.creatorId];
 				return {
 					social: intell.attach.social_id,
