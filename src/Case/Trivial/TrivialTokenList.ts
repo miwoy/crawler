@@ -26,7 +26,7 @@ class TrivialTokenList extends Case {
 			}));
 		});
 
-		let result = await culprit.start();
+		let result = await trivialToken.start();
 
 		return result;
 	}

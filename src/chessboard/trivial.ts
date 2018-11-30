@@ -4,6 +4,7 @@
 import { Intelligence } from "../Case";
 import TrivialTokenList from "../Case/Trivial/TrivialTokenList";
 import { Task } from "./";
+import * as fs from "fs";
 
 const entry = "https://reactbackend-dot-trivial2-188516.appspot.com";
 export let task: Task = async() => {
@@ -35,6 +36,6 @@ export let task: Task = async() => {
 	// trivial.gather(intell);
 
 	// let result = await trivial.start();
-
+	fs.writeFileSync("./trivial.json", JSON.stringify(reuslt));
 	return result;
 }
