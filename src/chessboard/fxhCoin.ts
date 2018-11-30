@@ -15,7 +15,7 @@ export let task:Task = async() => {
 		domain: entry,
 		headless: true,
 		force: true,
-		targetDomain: "https://www.feixiaohao.tech"
+		reportUrl: "https://www.feixiaohao.tech"
 	});
 
 	icodata.forEach(ico=> {

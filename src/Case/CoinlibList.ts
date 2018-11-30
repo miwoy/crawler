@@ -20,7 +20,7 @@ class CoinlibList extends Case {
 			headless: true,
 			force: true,
 			slave: 10,
-			targetDomain: this.targetDomain
+			reportUrl: this.reportUrl
 		});
 		for (let i = 0; i < table.length; i++) {
 			let path = $("a", table[i].children[4]).attr("href");

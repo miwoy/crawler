@@ -50,7 +50,7 @@ class Medium extends Case {
 		let evidences: Evidence[] = [];
 
 		if (culprit.success) {
-			evidences = Object.values(culprit.payload.references.Post).map(p=>{
+			evidences = _.values(culprit.payload.references.Post).map(p=>{
 				let user = culprit.payload.references.User[p.creatorId];
 				return {
 					social: intell.attach.social_id,
@@ -73,7 +73,7 @@ class Medium extends Case {
 		return evidences;
 
 	}
-	async criminate(evidences: Evidence, intell: Intelligence) {
+	async criminate(evidences: Evidence[], intell: Intelligence) {
 		// impl
 		const url = this.reportUrl;
 		debug("evidence length:", evidences.length);

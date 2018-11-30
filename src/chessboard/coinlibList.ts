@@ -18,7 +18,7 @@ export let task: Task = async() => {
 		headless: true,
 		force: false,
 		slave: 1,
-		targetDomain: "https://www.feixiaohao.tech"
+		reportUrl: "https://www.feixiaohao.tech"
 	});
 	do {
 		coinlibList.gather(new Intelligence({

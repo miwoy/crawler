@@ -17,8 +17,7 @@ export let task:Task = async() => {
 			"Referer": "https://www.aicoin.net.cn/",
 			"X-XSRF-TOKEN": "eyJpdiI6ImhaT1dTS3VjNWJlMGoxOUlyZHVUVEE9PSIsInZhbHVlIjoiNTlycXRzK1BYVEM4d2Ixd20ydmFoclF1cjA2cTMxblhaUHF0MTYyelBhbDEzdHVMNmtRbVdCSlpBREhRV2JBWW83UXowZzlDUFowOHZwR3BKczliWlE9PSIsIm1hYyI6IjgyYTdhNzM3ZjExODE2OGY5NmU1NjNjODA3NjExM2VmOTE3ZTEyYmU2YWQ5NzBkN2FlMDQ0ZWE3NTBlNDdlYmQifQ"
 		},
-		targetDomain: "https://www.feixiaohao.tech"
-		// targetDomain: "http://127.0.0.1:3000"
+		reportUrl: "https://www.feixiaohao.tech"
 	});
 
 	let intell: Intelligence = new Intelligence({

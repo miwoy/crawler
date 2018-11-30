@@ -18,7 +18,7 @@ class AICoins extends Case {
 	async criminate(evidence) {
 		// impl
 		await x.eachSync(evidence, async(evd)=> {
-			const url = this.targetDomain +  "/rest/coin/" + evd.short_name;
+			const url = this.reportUrl +  "/rest/coin/" + evd.short_name;
 			debug("evidence:", url, {
 				logo: evd.logo.split("?")[0]
 			});

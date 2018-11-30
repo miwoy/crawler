@@ -50,7 +50,7 @@ class Coinlib extends Case {
 	}
 	async criminate(evidence: Evidence, intell: Intelligence) {
 		// impl
-		const url = this.targetDomain +  "/rest/coin/" + evidence.symbol;
+		const url = this.reportUrl +  "/rest/coin/" + evidence.symbol;
 		debug("evidence:", url);
 		await request.put(url, evidence);
 		return evidence;

@@ -92,7 +92,7 @@ class FXHCoin extends Case {
 	}
 	async criminate(evidence: Evidence, intell: Intelligence) {
 		// impl
-		const url = this.targetDomain +  "/rest/coin/" + evidence.symbol;
+		const url = this.reportUrl +  "/rest/coin/" + evidence.symbol;
 		evidence.attach.ico_end_time = intell.attach["attach.ico_end_time"];
 		evidence.attach.sale_price_usd = intell.attach["attach.sale_price_usd"];
 		evidence.attach.telegram = intell.attach["attach.telegram"];

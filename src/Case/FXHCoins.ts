@@ -20,12 +20,12 @@ class FXHCoins extends Case {
 			headless: true,
 			force: true,
 			slave: 4,
-			targetDomain: this.targetDomain
+			reportUrl: this.reportUrl
 		});
 		for (let i = 0; i < table.length; i++) {
 			let path = $("a", table[i].children[1]).attr("href");
 			let symbol = $("a", table[i].children[1]).text().split("-")[0] || "";
-			let exists = await request.get(this.targetDomain + "/rest/coin/" + symbol.trim());
+			let exists = await request.get(this.reportUrl + "/rest/coin/" + symbol.trim());
 			if (exists.data.data) continue;
 			let mining_type = 0;
 			let mining_type_str = ($(table[i].children[4]).html()).split(";")[1];

@@ -113,6 +113,8 @@ class Police {
 							}
 						} else {
 							debug("collar:request:", intell.url);
+							
+							// let client = request.create(intell.url, httpsAgent);
 							culprit = await request.get(intell.url, {
 								params: intell.query,
 								headers: this.case.headers,
