@@ -41,6 +41,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "socks-proxy-agent": "^4.0.1",
+    "ssl-root-cas": "^1.2.5",
     "typescript": "^2.9.1"
   }
 }

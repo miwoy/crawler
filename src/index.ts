@@ -4,7 +4,7 @@ import * as path from "path";
 import { Task } from "./chessboard";
 
 
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const args = process.argv.slice(2); // 接受参数
 
 // 执行

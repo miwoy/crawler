@@ -17,7 +17,9 @@ class TrivialTokenList extends Case {
 	async interrogate(culprit, intell) {
 
 		let trivialToken: TrivialToken = new TrivialToken({
-			domain: "https://api.trivial.co"
+			domain: "https://api.trivial.co",
+          	force: true,
+          	slave: 2
 		});
 
 		culprit.forEach(cul=> {
@@ -28,7 +30,7 @@ class TrivialTokenList extends Case {
 
 		let result = await trivialToken.start();
 
-		return result;
+		return culprit;
 	}
 
 	async criminate(evidence, intell: Intelligence) {

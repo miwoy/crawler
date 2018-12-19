@@ -20,7 +20,6 @@ let exec = async() => {
 	let medium: Medium = new Medium({
 		domain: entry,
 		reportUrl: "https://api.block123.com/api/medium",
-		sleepTime: 3000,
 		force: true,
 		slave: 1
 	});
