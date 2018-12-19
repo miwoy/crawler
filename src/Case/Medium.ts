@@ -76,13 +76,35 @@ class Medium extends Case {
 	async criminate(evidences: Evidence[], intell: Intelligence) {
 		// impl
 		const url = this.reportUrl;
+		const authinfo = await this.authReport()
 		debug("evidence length:", evidences.length);
 		for(let i=0; i < evidences.length; i++) {
 			let evidence: Evidence = evidences[i];
-			await request.post(url, evidence);
+			await request.post(url, evidence, {
+				headers: {
+					// "Referrer Policy": "no-referrer-when-downgrade",
+					"X-CSRFTOKEN": authinfo.csrftoken,
+					"Cookie": authinfo.cookie,
+					// "Authorization": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1LCJ1c2VybmFtZSI6ImdrYkBibG9ja3MudGVjaCIsImV4cCI6MTU0NzgwMDk4OCwiZW1haWwiOiJna2JAYmxvY2tzLnRlY2giLCJvcmlnX2lhdCI6MTU0NTIwODk4OH0.tB9O9Tjs7c3ODhoXOtHKvAi0d8rGjQSWDzHGWk7TdaU",
+					"Content-Type": "application/json"
+				}
+			});
 		}
 		
 		return evidences;
+	}
+
+	async authReport() {
+		const url = "https://api.block123.com/api/auth/login/";
+		let r = await request.post(url, {
+			"email": "api@blocks.tech",
+			"password": "chainnews1@#"
+		})
+
+		return {
+			csrftoken: r.headers["set-cookie"][0].split(";")[0].replace("csrftoken=", ""),
+			"cookie": r.headers["set-cookie"].join(";")
+		}
 	}
 
 	onerror(error: ErrorConstructor): void {
