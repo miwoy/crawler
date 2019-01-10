@@ -73,7 +73,8 @@ class Police {
 	async collar(): Promise<Slammer> {
 		let queue: any[] = []; // 并且爬取队列
 		while (this.case.intelligences.length > 0) {
-			queue.push(this.case.intelligences.shift());
+			if (queue.length === 0)
+				queue.push(this.case.intelligences.shift());
 			if (queue.length >= this.case.slave || this.case.intelligences.length === 0) { 
 				await x.each(queue, async(intell) => {
 					/**
@@ -126,15 +127,15 @@ class Police {
 						let evidence = await this.case.interrogate(culprit, intell); // 审问
 						let result = await this.case.criminate(evidence, intell); // 审判
 						this.slammer.push(result);
+
 					} catch (err) {
 						if (this.case.force)
-							this.case.onerror && this.case.onerror(err);
+							this.case.onerror && await this.case.onerror(err, intell);
 						else
 							throw err;	
 					}
 					
 				});
-
 				queue = [];
 				await util.sleep(this.case.sleepTime);
 			}

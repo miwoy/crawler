@@ -50,9 +50,11 @@ class Medium extends Case {
 		let evidences: Evidence[] = [];
 
 		if (culprit.success) {
-			evidences = _.values(culprit.payload.references.Post).map(p=>{
+			let isCharacter = intell.attach.url.split("/").pop()[0] === "@"
+			evidences = _.values(culprit.payload.references.Post).reduce((total, p)=>{
 				let user = culprit.payload.references.User[p.creatorId];
-				return {
+				if (isCharacter && user.userId !== culprit.payload.user.userId) return;
+				total.push({
 					social: intell.attach.social_id,
 					unique_slug: p.uniqueSlug,
 					title: p.title,
@@ -66,8 +68,9 @@ class Medium extends Case {
 						bio: user.bio,
 						website: "https://medium.com/@" + user.username
 					}
-				}
-			})
+				});
+				return total;
+			}, [])
 		}
 
 		return evidences;
