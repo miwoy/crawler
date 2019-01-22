@@ -58,7 +58,7 @@ class Medium extends Case {
 					social: intell.attach.social_id,
 					unique_slug: p.uniqueSlug,
 					title: p.title,
-					created_at: new Date(p.createdAt),
+					created_at: new Date(p.latestPublishedAt),
 					subtitle: p.virtuals.subtitle,
 					url: intell.attach.url + "/" + p.uniqueSlug,
 					author: {
@@ -86,6 +86,7 @@ class Medium extends Case {
 			await request.post(url, evidence, {
 				headers: {
 					// "Referrer Policy": "no-referrer-when-downgrade",
+					"Referer": "https://api.block123.com",
 					"X-CSRFTOKEN": authinfo.csrftoken,
 					"Cookie": authinfo.cookie,
 					// "Authorization": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1LCJ1c2VybmFtZSI6ImdrYkBibG9ja3MudGVjaCIsImV4cCI6MTU0NzgwMDk4OCwiZW1haWwiOiJna2JAYmxvY2tzLnRlY2giLCJvcmlnX2lhdCI6MTU0NTIwODk4OH0.tB9O9Tjs7c3ODhoXOtHKvAi0d8rGjQSWDzHGWk7TdaU",
@@ -100,8 +101,8 @@ class Medium extends Case {
 	async authReport() {
 		const url = "https://api.block123.com/api/auth/login/";
 		let r = await request.post(url, {
-			"email": "api@blocks.tech",
-			"password": "chainnews1@#"
+			"email": "email",
+			"password": "password"
 		})
 
 		return {
