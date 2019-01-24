@@ -34,7 +34,7 @@ class Medium extends Case {
 	}
 
 	async interrogate(culprit, intell) {
-
+		
 		// impl
 		// let $ = cheerio.load(culprit); // 使用cheerio处理html
 		if (culprit) {
@@ -53,7 +53,7 @@ class Medium extends Case {
 			let isCharacter = intell.attach.url.split("/").pop()[0] === "@"
 			evidences = _.values(culprit.payload.references.Post).reduce((total, p)=>{
 				let user = culprit.payload.references.User[p.creatorId];
-				if (isCharacter && user.userId !== culprit.payload.user.userId) return;
+				if (isCharacter && user.userId !== culprit.payload.user.userId) return total;
 				total.push({
 					social: intell.attach.social_id,
 					unique_slug: p.uniqueSlug,
@@ -72,7 +72,6 @@ class Medium extends Case {
 				return total;
 			}, [])
 		}
-
 		return evidences;
 
 	}

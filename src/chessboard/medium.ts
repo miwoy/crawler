@@ -16,7 +16,6 @@ let exec = async() => {
 	let r = await request.get("https://api.block123.com/api/social/medium");
 	let socials = r.data;
 
-
 	let medium: Medium = new Medium({
 		domain: entry,
 		reportUrl: "https://api.block123.com/api/medium",
